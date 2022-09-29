@@ -74,7 +74,11 @@ public class Sorting {
     // implementation of the merge sort algorithm (calls recursive
     // helper method)
     public static void mergeSort(int[] a) {
-	mergeSort(a, 0, a.length);
+		mergeSort(a, 0, a.length);
+    }
+
+	public static void mergeSortImprov(int[] a) {
+		mergeSortImprov(a, 0, a.length);
     }
 
     // use merge sort to recursively sort the values of a between
@@ -90,6 +94,25 @@ public class Sorting {
 	mergeSort(a, j, k);
 	merge(a, i, j, k);
     }
+	
+	private static void mergeSortImprov(int[] a, int i, int k) {
+		System.out.println("Testing");
+		for(int x = 0; x < a.length; x++){
+			System.out.print(a[x] + ' ');
+		}
+		if (k - i <= 220) {
+			insertionSort(a, i, k);
+
+			return;
+		}
+	
+		int j = (i + k) / 2;
+	
+		mergeSortImprov(a, i, j);
+		mergeSortImprov(a, j, k);
+		merge(a, i, j, k);
+	}
+
 
     // merge the two sub-arrays of a between indices i and j and
     // indices j and k
@@ -133,6 +156,9 @@ public class Sorting {
     public static void quickSort(int[] a) {
 	quickSort(a, 0, a.length-1, new Random());
     }
+	public static void quickSortImprov(int[] a) {
+		quickSortImprov(a, 0, a.length-1, new Random());
+	}
 
     private static void quickSort(int[] a, int i, int j, Random r) {
 	// System.out.println("Sorting(" + i + ", " + j + ")");
@@ -146,6 +172,20 @@ public class Sorting {
 	quickSort(a, i, m-1, r);
       	quickSort(a, m+1, j, r);	
     }
+
+
+	private static void quickSortImprov(int[] a, int i, int j, Random r) {
+		// System.out.println("Sorting(" + i + ", " + j + ")");
+		
+		if (j <= i) {
+			return;
+		}
+	
+		int p = i + r.nextInt(j-i);
+		int m = split(a, i, j, p);
+		quickSort(a, i, m-1, r);
+			  quickSort(a, m+1, j, r);	
+	}
 
     // Split the array between indices i and j according to the pivot
     // index p. After this operation, the index m is returned such
